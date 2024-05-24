@@ -1,26 +1,31 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-//const swaggerUi = require('swagger-ui-express');
-const { connectDB } = require('./db/connection'); // Import connectDB instead of initDb
-require('dotenv').config();
-
-//const swaggerFile = require('./swagger_output.json'); // Ensure this path is correct
+const mongodb = require('./db/connect'); // Adjust the path if needed
+const recipesRoutes = require('./routes/recipes'); // Adjust the path if needed
 
 const app = express();
 
-// Middleware
-app.use(bodyParser.json());
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+// Middleware to parse JSON bodies
+app.use(express.json());
 
-// Database connection
-connectDB(() => {
-  // Routes
-  const recipeRoutes = require('./routes/recipes');
-  app.use('/recipes', recipeRoutes);
+// Use recipes routes
+app.use('/recipes', recipesRoutes);
 
-  // Start server
-  const PORT = process.env.PORT || 8080;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
+// Connect to the database and start the server
+const PORT = process.env.PORT || 8080;
+mongodb.initDb((err) => {
+  if (err) {
+    console.error('Failed to connect to the database', err);
+  } else {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  }
 });
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+module.exports = app;

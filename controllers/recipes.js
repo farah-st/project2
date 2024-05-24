@@ -1,56 +1,90 @@
-const { getDb } = require('../db/connection');
+const mongodb = require('../db/connect');
+const ObjectId = require('mongodb').ObjectId;
 
-exports.createRecipe = async (req, res) => {
-  const recipe = {
-    title: req.body.title,
-    ingredients: req.body.ingredients,
-    instructions: req.body.instructions,
-    cookTime: req.body.cookTime,
-    difficulty: req.body.difficulty
-  };
-
+const getAllRecipes = async (req, res) => {
   try {
-    const db = getDb();
-    console.log('MongoDB client:', db); // Log the MongoDB client instance
-    console.log('Collections:', db.collections); // Log the collections available in the database
-    const result = await db.collection('recipes').insertOne(recipe);
-    res.status(201).json(result.ops[0]);
-  } catch (err) {
-    console.error('Error creating recipe:', err); // Log any errors
-    res.status(400).json({ message: err.message });
+    const result = await mongodb.getDb().db().collection('recipes').find().toArray();
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching recipes.' });
   }
 };
 
-
-exports.updateRecipe = async (req, res) => {
+const getSingleRecipe = async (req, res) => {
   try {
-    const db = getDb(); // Use getDb function to get the database instance
-    const updatedRecipe = {
+    const recipeId = new ObjectId(req.params.id);
+    const result = await mongodb.getDb().db().collection('recipes').findOne({ _id: recipeId });
+    if (result) {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: 'Recipe not found.' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching the recipe.' });
+  }
+};
+
+const createRecipe = async (req, res) => {
+  try {
+    const recipe = {
       title: req.body.title,
       ingredients: req.body.ingredients,
       instructions: req.body.instructions,
       cookTime: req.body.cookTime,
       difficulty: req.body.difficulty
     };
-    const result = await db.collection('recipes').updateOne({ _id: new ObjectId(req.params.id) }, { $set: updatedRecipe });
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ message: 'Recipe not found' });
+    const response = await mongodb.getDb().db().collection('recipes').insertOne(recipe);
+    if (response.acknowledged) {
+      res.status(201).json(response);
+    } else {
+      res.status(500).json({ error: 'Failed to create recipe.' });
     }
-    res.json({ message: 'Recipe updated successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while creating the recipe.' });
   }
 };
 
-exports.deleteRecipe = async (req, res) => {
+const updateRecipe = async (req, res) => {
   try {
-    const db = getDb(); // Use getDb function to get the database instance
-    const result = await db.collection('recipes').deleteOne({ _id: new ObjectId(req.params.id) });
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ message: 'Recipe not found' });
+    const recipeId = new ObjectId(req.params.id);
+    const recipe = {
+      title: req.body.title,
+      ingredients: req.body.ingredients,
+      instructions: req.body.instructions,
+      cookTime: req.body.cookTime,
+      difficulty: req.body.difficulty
+    };
+    const response = await mongodb.getDb().db().collection('recipes').replaceOne({ _id: recipeId }, recipe);
+    if (response.modifiedCount > 0) {
+      res.status(204).send();
+    } else {
+      res.status(500).json({ error: 'Failed to update recipe or no changes made.' });
     }
-    res.json({ message: 'Recipe deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while updating the recipe.' });
   }
+};
+
+const deleteRecipe = async (req, res) => {
+  try {
+    const recipeId = new ObjectId(req.params.id);
+    const response = await mongodb.getDb().db().collection('recipes').deleteOne({ _id: recipeId });
+    if (response.deletedCount > 0) {
+      res.status(204).send();
+    } else {
+      res.status(404).json({ error: 'Recipe not found.' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while deleting the recipe.' });
+  }
+};
+
+module.exports = {
+  getAllRecipes,
+  getSingleRecipe,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe
 };
