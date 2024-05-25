@@ -1,18 +1,14 @@
 const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
-    info: {
-        title: 'My API',
-        description: 'API Documentation',
-    },
-    host: 'localhost:8080',
-    schemes: ['http', 'https'], // Include both HTTP and HTTPS
+  info: {
+    title: 'Recipes API',
+    description: 'API for managing recipes',
+  },
+  host: 'localhost:8080',  // Change this to your deployed URL when deploying
 };
 
-const outputFile = './swagger.json';
-const endpointsFiles = ['./routes/index.js'];
+const outputFile = './swagger-output.json';
+const endpointsFiles = ['./app.js'];
 
-swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-    require('./app'); 
-});
-
+swaggerAutogen(outputFile, endpointsFiles, doc);
