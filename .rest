@@ -16,12 +16,12 @@ Content-Type: application/json
 
 ### Get Recipe By ID
 # Replace {id} with an actual recipe ID after creating a recipe
-GET http://localhost:8080/recipes/6651fc286e3ffb85e9fa3f29
+GET http://localhost:8080/recipes/66520432b0e3cac13af59266
 Content-Type: application/json
 
 ### Update a Recipe
 # Replace {id} with an actual recipe ID after creating a recipe
-PUT http://localhost:8080/recipes/6651fc286e3ffb85e9fa3f29
+PUT http://localhost:8080/recipes/66520432b0e3cac13af59266
 Content-Type: application/json
 
 {
@@ -34,5 +34,5 @@ Content-Type: application/json
 
 ### Delete a Recipe
 # Replace {id} with an actual recipe ID after creating a recipe
-DELETE http://localhost:8080/recipes/6651fc286e3ffb85e9fa3f29
+DELETE http://localhost:8080/recipes/66520432b0e3cac13af59266
 Content-Type: application/json

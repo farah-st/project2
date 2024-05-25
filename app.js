@@ -1,6 +1,8 @@
 const express = require('express');
-const mongodb = require('./db/connect'); // Adjust the path if needed
-const recipesRoutes = require('./routes/recipes'); // Adjust the path if needed
+const mongodb = require('./db/connect');
+const recipesRoutes = require('./routes/recipes');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json'); // Adjust the path if needed
 
 const app = express();
 
@@ -9,6 +11,9 @@ app.use(express.json());
 
 // Use recipes routes
 app.use('/recipes', recipesRoutes);
+
+// Serve Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Connect to the database and start the server
 const PORT = process.env.PORT || 8080;
