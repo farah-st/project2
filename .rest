@@ -1,2 +1,38 @@
+
 GET http://localhost:8080/recipes
+Content-Type: application/json
+
+### Create a New Recipe
+POST http://localhost:8080/recipes
+Content-Type: application/json
+
+{
+  "title": "Enchiladas",
+  "ingredients": ["Tortillas", "Chicken", "Green sauce", "Cheese"],
+  "instructions": "Layer of toritillas, shredded chicken, green sauce and then cheese",
+  "cookTime": "30 minutes",
+  "difficulty": "Medium"
+}
+
+### Get Recipe By ID
+# Replace {id} with an actual recipe ID after creating a recipe
+GET http://localhost:8080/recipes/6651fc286e3ffb85e9fa3f29
+Content-Type: application/json
+
+### Update a Recipe
+# Replace {id} with an actual recipe ID after creating a recipe
+PUT http://localhost:8080/recipes/6651fc286e3ffb85e9fa3f29
+Content-Type: application/json
+
+{
+  "title": "Enchiladas",
+  "ingredients": ["Tortillas", "Chicken", "Green sauce", "Cheese", "Table Cream"],
+  "instructions": "Layer of toritillas, shredded chicken, green sauce and then cheese.",
+  "cookTime": "30 minutes",
+  "difficulty": "Medium"
+}
+
+### Delete a Recipe
+# Replace {id} with an actual recipe ID after creating a recipe
+DELETE http://localhost:8080/recipes/6651fc286e3ffb85e9fa3f29
 Content-Type: application/json

@@ -58,9 +58,9 @@ const updateRecipe = async (req, res) => {
     };
     const response = await mongodb.getDb().db().collection('recipes').replaceOne({ _id: recipeId }, recipe);
     if (response.modifiedCount > 0) {
-      res.status(204).send();
+      res.status(201).json({ message: 'Recipe updated successfully' });
     } else {
-      res.status(500).json({ error: 'Failed to update recipe or no changes made.' });
+      res.status(404).json({ error: 'Recipe not found or no changes made.' });
     }
   } catch (error) {
     res.status(500).json({ error: 'An error occurred while updating the recipe.' });
