@@ -7,7 +7,7 @@ POST http://localhost:8080/recipes
 Content-Type: application/json
 
 {
-  "title": 123456,
+  "title": "Pasta",
   "ingredients": [
     "2 cups pasta (penne or fettuccine recommended)",
     "2 chicken breasts",
@@ -24,11 +24,11 @@ Content-Type: application/json
 }
 
 ### Get Recipe By ID
-GET http://localhost:8080/recipes/6652a6d4023696a648ab28e0
+GET http://localhost:8080/recipes/665baa3a8c83d47d4b329b26
 Content-Type: application/json
 
 ### Update a Recipe
-PUT http://localhost:8080/recipes/6652a6d4023696a648ab28e0
+PUT http://localhost:8080/recipes/665baa3a8c83d47d4b329b26
 Content-Type: application/json
 
 {
@@ -50,5 +50,5 @@ Content-Type: application/json
 
 ### Delete a Recipe
 # Replace {id} with an actual recipe ID after creating a recipe
-DELETE http://localhost:8080/recipes/6652a6d4023696a648ab28e0
+DELETE http://localhost:8080/recipes/665baa3a8c83d47d4b329b26
 Content-Type: application/json

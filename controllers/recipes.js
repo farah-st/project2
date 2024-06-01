@@ -1,13 +1,18 @@
 const mongodb = require('../db/connect');
-const ObjectId = require('mongodb').ObjectId;
+const { ObjectId } = require('mongodb');
+const Joi = require('joi');
+
+const recipeSchema = Joi.object({
+  title: Joi.string().required(),
+  ingredients: Joi.array().items(Joi.string()).required(),
+  instructions: Joi.string().required(),
+  cookTime: Joi.string().required(),
+  difficulty: Joi.string().required()
+});
 
 const validateRecipe = (recipe) => {
-  if (!recipe.title || typeof recipe.title !== 'string') return 'Invalid title';
-  if (!recipe.ingredients || !Array.isArray(recipe.ingredients)) return 'Invalid ingredients';
-  if (!recipe.instructions || typeof recipe.instructions !== 'string') return 'Invalid instructions';
-  if (!recipe.cookTime || typeof recipe.cookTime !== 'string') return 'Invalid cookTime';
-  if (!recipe.difficulty || typeof recipe.difficulty !== 'string') return 'Invalid difficulty';
-  return null;
+  const { error } = recipeSchema.validate(recipe);
+  return error ? error.details[0].message : null;
 };
 
 const getAllRecipes = async (req, res) => {
@@ -39,13 +44,8 @@ const getSingleRecipe = async (req, res) => {
 
 const createRecipe = async (req, res) => {
   try {
-    const recipe = {
-      title: req.body.title,
-      ingredients: req.body.ingredients,
-      instructions: req.body.instructions,
-      cookTime: req.body.cookTime,
-      difficulty: req.body.difficulty
-    };
+    const { title, ingredients, instructions, cookTime, difficulty } = req.body;
+    const recipe = { title, ingredients, instructions, cookTime, difficulty };
     const validationError = validateRecipe(recipe);
     if (validationError) {
       return res.status(400).json({ error: validationError });
@@ -65,13 +65,8 @@ const createRecipe = async (req, res) => {
 const updateRecipe = async (req, res) => {
   try {
     const recipeId = new ObjectId(req.params.id);
-    const recipe = {
-      title: req.body.title,
-      ingredients: req.body.ingredients,
-      instructions: req.body.instructions,
-      cookTime: req.body.cookTime,
-      difficulty: req.body.difficulty
-    };
+    const { title, ingredients, instructions, cookTime, difficulty } = req.body;
+    const recipe = { title, ingredients, instructions, cookTime, difficulty };
     const validationError = validateRecipe(recipe);
     if (validationError) {
       return res.status(400).json({ error: validationError });
@@ -93,7 +88,7 @@ const deleteRecipe = async (req, res) => {
     const recipeId = new ObjectId(req.params.id);
     const response = await mongodb.getDb().db().collection('recipes').deleteOne({ _id: recipeId });
     if (response.deletedCount > 0) {
-      res.status(204).send();
+      res.status(200).json({ message: 'Recipe deleted successfully' });
     } else {
       res.status(404).json({ error: 'Recipe not found.' });
     }
@@ -110,4 +105,3 @@ module.exports = {
   updateRecipe,
   deleteRecipe
 };
-
