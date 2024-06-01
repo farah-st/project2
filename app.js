@@ -4,16 +4,32 @@ const dotenv = require('dotenv');
 const recipesRoutes = require('./routes/recipes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json');
+const helmet = require('helmet');
+const cors = require('cors');
+const morgan = require('morgan');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// Middleware
 app.use(express.json());
+app.use(helmet());
+app.use(cors());
+app.use(morgan('combined'));
+
+// Routes
 app.use('/recipes', recipesRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'An internal error occurred.' });
+});
+
+// Initialize DB and start server
 initDb((err) => {
   if (err) {
     console.error('Failed to connect to database:', err);
@@ -24,6 +40,8 @@ initDb((err) => {
     });
   }
 });
+
+
 
 
 

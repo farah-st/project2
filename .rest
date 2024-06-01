@@ -7,7 +7,7 @@ POST http://localhost:8080/recipes
 Content-Type: application/json
 
 {
-  "title": "Chicken Alfredo Pasta",
+  "title": 123456,
   "ingredients": [
     "2 cups pasta (penne or fettuccine recommended)",
     "2 chicken breasts",
@@ -24,13 +24,11 @@ Content-Type: application/json
 }
 
 ### Get Recipe By ID
-# Replace {id} with an actual recipe ID after creating a recipe
-GET http://localhost:8080/recipes/665250fc9a08d67bdfcb13a9
+GET http://localhost:8080/recipes/6652a6d4023696a648ab28e0
 Content-Type: application/json
 
 ### Update a Recipe
-# Replace {id} with an actual recipe ID after creating a recipe
-PUT http://localhost:8080/recipes/665250fc9a08d67bdfcb13a9
+PUT http://localhost:8080/recipes/6652a6d4023696a648ab28e0
 Content-Type: application/json
 
 {
@@ -43,14 +41,14 @@ Content-Type: application/json
     "2 cloves garlic, minced",
     "2 tablespoons butter",
     "Salt and pepper to taste",
-    "Fresh parsley (optional, for garnish)"
+    "Fresh parsley"
   ],
-  "instructions": "1. Cook the pasta according to the package instructions until al dente. Drain and set aside.\n2. Season the chicken breasts with salt and pepper. In a large skillet over medium heat, cook the chicken until golden brown and cooked through, about 6-7 minutes per side. Remove from the skillet and let it rest before slicing into thin strips.\n3. In the same skillet, melt the butter over medium heat. Add the minced garlic and cook until fragrant, about 1 minute.\n4. Pour in the heavy cream and bring it to a simmer. Reduce the heat to low and gradually stir in the grated Parmesan cheese until the sauce is smooth and thickened.\n5. Add the cooked pasta and sliced chicken into the skillet, tossing to coat everything evenly with the Alfredo sauce.\n6. Serve hot, garnished with fresh parsley if desired.",
+  "instructions": " Cook the pasta according to the package instructions until al dente. Drain and set aside.\n2. Season the chicken breasts with salt and pepper. In a large skillet over medium heat, cook the chicken until golden brown and cooked through, about 6-7 minutes per side. Remove from the skillet and let it rest before slicing into thin strips.\n3. In the same skillet, melt the butter over medium heat. Add the minced garlic and cook until fragrant, about 1 minute.\n4. Pour in the heavy cream and bring it to a simmer. Reduce the heat to low and gradually stir in the grated Parmesan cheese until the sauce is smooth and thickened.\n5. Add the cooked pasta and sliced chicken into the skillet, tossing to coat everything evenly with the Alfredo sauce.\n6. Serve hot, garnished with fresh parsley if desired.",
   "cookTime": "40 minutes",
   "difficulty": "Medium"
 }
 
 ### Delete a Recipe
 # Replace {id} with an actual recipe ID after creating a recipe
-DELETE http://localhost:8080/recipes/665250fc9a08d67bdfcb13a9
+DELETE http://localhost:8080/recipes/6652a6d4023696a648ab28e0
 Content-Type: application/json
