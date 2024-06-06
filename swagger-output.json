@@ -5,7 +5,7 @@
     "description": "API for managing recipes",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "localhost:3001",
   "basePath": "/",
   "schemes": ["http", "https"],
   "paths": {
