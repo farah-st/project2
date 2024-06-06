@@ -1,9 +1,9 @@
 
-GET http://localhost:8080/api-docs
+GET http://localhost:3001/api-docs
 Content-Type: application/json
 
 ### Create a New Recipe
-POST http://localhost:8080/recipes
+POST http://localhost:3001/recipes
 Content-Type: application/json
 
 {
@@ -24,11 +24,11 @@ Content-Type: application/json
 }
 
 ### Get Recipe By ID
-GET http://localhost:8080/recipes/665bbb9d6704efc68aa3ad24
+GET http://localhost:3001/recipes/6661062e63e009b510bff213
 Content-Type: application/json
 
 ### Update a Recipe
-PUT http://localhost:8080/recipes/665bbb9d6704efc68aa3ad24
+PUT http://localhost:3001/recipes/6661062e63e009b510bff213
 Content-Type: application/json
 
 {
@@ -50,5 +50,5 @@ Content-Type: application/json
 
 ### Delete a Recipe
 # Replace {id} with an actual recipe ID after creating a recipe
-DELETE http://localhost:8080/recipes/665bbb9d6704efc68aa3ad24
+DELETE http://localhost:3001/recipes/6661062e63e009b510bff213
 Content-Type: application/json
