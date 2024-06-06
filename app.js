@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(helmet());
 // Adjusting CORS to allow requests from 'https://project2-0vw8.onrender.com'
 app.use(cors({
-  origin: 'https://project2-recipes-frontend.netlify.app'
+  origin: 'https://project2-0vw8.onrender.com'
 }));
 app.use(morgan('combined'));
 
