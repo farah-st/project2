@@ -16,7 +16,6 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(express.json());
 app.use(helmet());
-
 app.use(cors({
   origin: 'https://project2-0vw8.onrender.com'
 }));
@@ -43,9 +42,6 @@ initDb((err) => {
     });
   }
 });
-
-
-
 
 
 
