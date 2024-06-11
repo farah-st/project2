@@ -5,7 +5,7 @@ const doc = {
     title: 'Recipes API',
     description: 'API for managing recipes',
   },
-  host: 'localhost:3001',  // Change this to your deployed URL when deploying
+  host: 'https://project2-0vw8.onrender.com/',  // Change this to your deployed URL when deploying
 };
 
 const outputFile = './swagger-output.json';
