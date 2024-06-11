@@ -7,19 +7,38 @@ const swaggerFile = require('./swagger-output.json');
 const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
+const { auth } = require('express-openid-connect');
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Auth0 configuration
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.AUTH0_SECRET,
+  baseURL: process.env.BASE_URL,
+  clientID: process.env.AUTH0_CLIENT_ID,
+  issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL
+};
+
 // Middleware
 app.use(express.json());
 app.use(helmet());
 app.use(cors({
-  origin: 'https://project2-0vw8.onrender.com'
+  origin: process.env.BASE_URL
 }));
 app.use(morgan('combined'));
+
+// Auth0 middleware
+app.use(auth(config));
+
+// Auth check route
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
 
 // Routes
 app.use('/recipes', recipesRoutes);
@@ -42,6 +61,3 @@ initDb((err) => {
     });
   }
 });
-
-
-
