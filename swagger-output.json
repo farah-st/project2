@@ -5,7 +5,7 @@
     "description": "API for managing recipes",
     "version": "1.0.0"
   },
-  "host": "project2-0vw8.onrender.com/api-docs",
+  "host": "project2-0vw8.onrender.com/api-docs/recipes",
   "basePath": "/",
   "schemes": ["http", "https"],
   "paths": {

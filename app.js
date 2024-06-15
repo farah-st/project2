@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
 const { auth } = require('express-openid-connect');
+const path = require('path');
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ const config = {
 app.use(express.json());
 app.use(helmet());
 app.use(cors({
-  origin: process.env.BASE_URL
+   origin: 'https://project2-0vw8.onrender.com'
 }));
 app.use(morgan('combined'));
 
@@ -43,6 +44,21 @@ app.get('/', (req, res) => {
 // Routes
 app.use('/recipes', recipesRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+// Serve Swagger JSON
+app.get('/swagger-output.json', (req, res) => {
+  res.sendFile(path.join(__dirname, 'swagger-output.json'));
+});
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, {
+  swaggerOptions: {
+    url: '/swagger-output.json'
+  }
+}));
+
+app.get('/swagger-output.json', (req, res) => {
+  res.sendFile(__dirname + '/swagger-output.json');
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -61,6 +77,7 @@ initDb((err) => {
     });
   }
 });
+
 
 
 //https://project2-0vw8.onrender.com/login -> Auth0 working
