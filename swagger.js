@@ -5,10 +5,12 @@ const doc = {
     title: 'Recipes API',
     description: 'API for managing recipes',
   },
-  host: 'https://project2-0vw8.onrender.com/',  // Change this to your deployed URL when deploying
+  host: 'project2-0vw8.onrender.com',  // Only the hostname
+  schemes: ['https'],  // Add schemes if your API uses HTTPS
 };
 
 const outputFile = './swagger-output.json';
 const endpointsFiles = ['./app.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);
+
